@@ -1,6 +1,7 @@
 {
   "name": "mysql-sequelize-model-generator",
-  "version": "1.0.3",
+  "version": "1.0.5",
+
   "description": "A TypeScript library for Node.js to build class for sequelize mysql",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,6 +15,7 @@
     "sequelize"
   ],
   "scripts": {
+    "dev": "tsx ./test/generate-models.ts",
     "build": "tsc",
     "prepublishOnly": "npm run build",
     "publish to npm": "tsc && npm publish",
@@ -23,10 +25,12 @@
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
+    "mysql2": "^3.14.1",
     "sequelize": "^6.37.7"
   }
 }

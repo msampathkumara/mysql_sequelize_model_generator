@@ -84,6 +84,7 @@ export type Models = ReturnType<typeof initModels>;
       AND table_name = '${tableName}'
       ORDER BY ordinal_position
     `);
+            console.log(tableName);
             return results.map(row => ({
                 name: this.toCamelCase(row.column_name || row.COLUMN_NAME),
                 definition: {
@@ -91,7 +92,7 @@ export type Models = ReturnType<typeof initModels>;
                     allowNull: (row.is_nullable || row.IS_NULLABLE) === 'YES',
                     primaryKey: (row.column_key || row.COLUMN_KEY) === 'PRI',
                     autoIncrement: (row.extra || row.EXTRA) === 'auto_increment',
-                    defaultValue: row.column_default || row.COLUMN_DEFAULT
+                    defaultValue: (row.is_nullable && row.column_default == 'NULL') ? null : `Sequelize.literal( ${JSON.stringify(row.column_default)})` || (row.COLUMN_DEFAULT)
                 }
             }));
         });
@@ -109,6 +110,7 @@ export type Models = ReturnType<typeof initModels>;
             }));
             return `
 import { Table, Column, Model, DataType,BelongsTo } from 'sequelize-typescript';
+import {Sequelize} from "sequelize-typescript";
          ${associations.imports.map((clas) => `import ${clas} from './${clas}.model';`)} 
          
 
@@ -125,7 +127,8 @@ ${associations.decorators}
             `allowNull: ${col.definition.allowNull}`,
             col.definition.primaryKey && 'primaryKey: true',
             col.definition.autoIncrement && 'autoIncrement: true',
-            col.definition.defaultValue !== undefined && `defaultValue: ${JSON.stringify(col.definition.defaultValue)}`,
+            // col.definition.defaultValue !== undefined && `defaultValue: ${JSON.stringify(col.definition.defaultValue)}`,
+            col.definition.allowNull && col.definition.defaultValue !== undefined && `defaultValue: ${(col.definition.defaultValue)}`,
         ].filter(Boolean).join(',\n    ');
         return `  @Column({\n    ${decoratorOptions}\n  })\n declare ${col.name}: ${this.mapTypeToTS(col.definition.type)};`;
     }
@@ -310,7 +313,7 @@ ${associations.decorators}
     optionsToString(options) {
         if (!options || Object.keys(options).length === 0)
             return '';
-        console.log(`options ${options.foreignKey}`);
+        // console.log(`options ${options.foreignKey}`)
         // return `, "${options.foreignKey}"`
         return `, {${JSON.stringify(options).slice(1, -1)}}`;
     }

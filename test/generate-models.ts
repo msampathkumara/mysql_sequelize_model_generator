@@ -3,7 +3,7 @@ import path from "path";
 import MysqlSequelizeModelGenerator from "../src";
 
 
-dotenv.config({path: path.resolve(__dirname, '../.env/.env')});
+dotenv.config({path: path.resolve(__dirname, '../../.env')});
 
 
 const dbName = process.env.DB_NAME;
@@ -26,7 +26,8 @@ const generator = new MysqlSequelizeModelGenerator({
 
 (async () => {
     try {
-        await generator.generate('./src/M/models');
+        await generator.generate('../models');
+
         console.log('Models generated successfully!');
     } catch (error) {
         console.error('Model generation failed:', error);
