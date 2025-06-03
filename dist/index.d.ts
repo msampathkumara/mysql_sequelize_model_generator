@@ -4,7 +4,7 @@ export default class MysqlSequelizeModelGenerator {
     private associations;
     constructor(config: Options | undefined);
     private getDatabaseTables;
-    generateAll(outputDir: string): Promise<void>;
+    generate(outputDir: string): Promise<void>;
     private generateInitModelsFile;
     private getTableColumns;
     private generateModelFile;

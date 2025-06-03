@@ -1,9 +1,9 @@
 # 🔄 MySQL Sequelize Model Generator
 
-[![npm version](https://img.shields.io/npm/v/mysql-sequelize-model-generator.svg?style=for-the-badge&color=blue)](https://www.npmjs.com/package/mysql_sequelize_model_generator)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-✓-blue.svg?style=for-the-badge)](https://www.typescriptlang.org/)
-[![Sequelize](https://img.shields.io/badge/Sequelize-✓-52B0E7.svg?style=for-the-badge)](https://sequelize.org/)
+[![npm](https://img.shields.io/npm/v/mysql-sequelize-model-generator?color=blue&label=npm&logo=npm&style=flat)](https://www.npmjs.com/package/mysql_sequelize_model_generator)
+[![License](https://img.shields.io/badge/License-MIT-blue?logo=open-source-initiative&style=flat)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-4.0+-3178C6?logo=typescript&style=flat)](https://www.typescriptlang.org/)
+[![Sequelize](https://img.shields.io/badge/Sequelize-6.0+-52B0E7?logo=sequelize&style=flat)](https://sequelize.org/)
 
 ✨ **Automatically generate production-ready Sequelize TypeScript models from your MySQL database** ✨
 
@@ -109,7 +109,7 @@ DB_PORT=3306  # Optional (default: 3306)
 
 ### Create a generator script ``` generate-models.ts```
 
-```node
+```ts
 import dotenv from 'dotenv';
 import path from 'path';
 import MysqlSequelizeModelGenerator from 'mysql-sequelize-model-generator';
@@ -117,12 +117,11 @@ import MysqlSequelizeModelGenerator from 'mysql-sequelize-model-generator';
 dotenv.config({ path: path.resolve(__dirname, '../.env/.env') });
 
 const generator = new MysqlSequelizeModelGenerator({
-  host: process.env.dbHost!,
+  host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT || '3306'),
-  username: process.env.dbUser!,
-  password: process.env.dbPassword!,
-  database: process.env.dbName!,
-  dialect: 'mysql',
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME 
 });
 
 (async () => {
@@ -144,7 +143,7 @@ const generator = new MysqlSequelizeModelGenerator({
 
 ## Support
 
-For issues and feature requests, please [open an issue](https://github.com/yourusername/mysql-sequelize-model-generator/issues).
+For issues and feature requests, please [open an issue](https://github.com/msampathkumara/mysql_sequelize_model_generator/issues).
 
 ### Need Help?
 

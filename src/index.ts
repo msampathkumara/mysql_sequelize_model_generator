@@ -23,6 +23,7 @@ export default class MysqlSequelizeModelGenerator {
         this.sequelize = new Sequelize({
             ...config,
             logging: false,
+            dialect: 'mysql',
         });
     }
 
@@ -35,7 +36,7 @@ export default class MysqlSequelizeModelGenerator {
         return (results as any[]).map(r => r.TABLE_NAME || r.table_name);
     }
 
-    async generateAll(outputDir: string) {
+    async generate(outputDir: string) {
         const tables = await this.getDatabaseTables();
         const modelNames: string[] = [];
 
@@ -109,7 +110,7 @@ export type Models = ReturnType<typeof initModels>;
                 allowNull: (row.is_nullable || row.IS_NULLABLE) === 'YES',
                 primaryKey: (row.column_key || row.COLUMN_KEY) === 'PRI',
                 autoIncrement: (row.extra || row.EXTRA) === 'auto_increment',
-                defaultValue: row.column_default || row.COLUMN_DEFAULT
+                defaultValue: row.column_default || (row.COLUMN_DEFAULT=='NULL' ? null : row.COLUMN_DEFAULT)
             }
         }));
     }

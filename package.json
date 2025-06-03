@@ -1,6 +1,6 @@
 {
-  "name": "mysql_sequelize_model_generator",
-  "version": "1.0.2",
+  "name": "mysql-sequelize-model-generator",
+  "version": "1.0.3",
   "description": "A TypeScript library for Node.js to build class for sequelize mysql",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

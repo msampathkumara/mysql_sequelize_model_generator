@@ -19,7 +19,7 @@ const path_1 = __importDefault(require("path"));
 class MysqlSequelizeModelGenerator {
     constructor(config) {
         this.associations = {};
-        this.sequelize = new sequelize_1.Sequelize(Object.assign(Object.assign({}, config), { logging: false }));
+        this.sequelize = new sequelize_1.Sequelize(Object.assign(Object.assign({}, config), { logging: false, dialect: 'mysql' }));
     }
     getDatabaseTables() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,7 +31,7 @@ class MysqlSequelizeModelGenerator {
             return results.map(r => r.TABLE_NAME || r.table_name);
         });
     }
-    generateAll(outputDir) {
+    generate(outputDir) {
         return __awaiter(this, void 0, void 0, function* () {
             const tables = yield this.getDatabaseTables();
             const modelNames = [];
